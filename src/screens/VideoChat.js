@@ -10,12 +10,12 @@ const secret = "fb557b9b880c278439a508c66dbb85be03552739";
 const apiKey = "47306554";
 
 const VideoChat = () => {
-	let { sessionId, token } = useParams;
+	let { sessionID, token } = useParams;
 	useEffect(() => {
 		initTok();
 	}, []);
 	const initTok = () => {
-		var session = OT.initSession(apiKey, sessionId);
+		var session = OT.initSession(apiKey, sessionID);
 		var publisher = OT.initPublisher('publisher', {
 			insertMode: 'append',
 			width: '100%',
