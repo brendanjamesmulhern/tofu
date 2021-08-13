@@ -16,7 +16,7 @@ ReactDOM.render(
     <Route path="/MyTeams" component={MyTeams} />
     <Route path="/chat/:id" component={TeamChat} />
     <Route path="/:sessionID/:token" component={VideoChat} />
-    <Router exact path="/" component={GenerateLink} />
+    <Route exact path="/" component={GenerateLink} />
   </Router>,
   document.getElementById('root')
 );
