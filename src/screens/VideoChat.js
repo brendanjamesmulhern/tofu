@@ -33,12 +33,9 @@ const VideoChat = () => {
 		})
 	};
 	return (
-		<div className="h-screen w-screen flex flex-col justify-between">
-			<Navbar />
-				<div id="videos" className="h-screen w-screen flex">
-					<div className="w-screen h-screen" id='subscriber'></div>
-				</div>
-			<Footer />
+		<div id="video" className="h-full w-full flex flex-col">
+			<div className="h-96 w-screen" id='publisher'></div>
+			<div className="h-96 w-screen" id='subscriber'></div>
 		</div>
 	);
 };
