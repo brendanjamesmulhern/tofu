@@ -15,7 +15,7 @@ const VideoChat = () => {
 		initTok();
 	}, []);
 	const initTok = () => {
-		var session = OT.initSession(apiKey, sessionID);
+		var session = OT.initSession(apiKey, sessionId);
 		var publisher = OT.initPublisher('publisher', {
 			insertMode: 'append',
 			width: '100%',
