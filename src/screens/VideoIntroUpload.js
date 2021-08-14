@@ -28,10 +28,13 @@ const VideoIntroUpload =() => {
 		let url = 'gs://tofu-a6b1f.appspot.com/' + snapshot['ref']['_delegate']['_location']['path'];
 		let newVideo = { "url": url, date: new Date().toISOString() };
 		let email = localStorage.getItem('email');
-		var query = { "email": email };
-		var update = { "$addToSet": { videos: newVideo }};
-		const result = await users.updateOne(query, update);
-		console.log(result);
+		let out = {
+			newVideo: newVideo,
+			email: email
+		};
+		axios.post('https://api-tofu.herokuapp.com/updateVideoUrls', out).then(res => {
+			console.log(res);
+		})
 	}	
 	const handleUpload = (e) => {
 		setFile(e.target.files[0]);
