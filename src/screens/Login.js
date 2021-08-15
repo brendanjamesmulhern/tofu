@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import RealmApp from '../config/RealmApp';
 import * as Realm from 'realm-web';
@@ -19,10 +19,15 @@ const Login = () => {
 		const credentials = Realm.Credentials.emailPassword(email, password);
 		const user = await app.logIn(credentials);
 		CheckUser(user);
+		CheckIfUserIsPremium(user);
 		localStorage.setItem('email', email);
 		if (user !== undefined) {
 			localStorage.setItem('user', user);
-			history.push('/MyTeams');
+			if (localStorage.getItem('email') && localStorage.getItem('isPremium') === true) {
+				history.push('/MyTeams');
+			} else {
+				history.push('/join');
+			}
 		};
 	};
 	const CheckUser = async (user) => {
@@ -30,8 +35,19 @@ const Login = () => {
 		const users = mongodb.db('tofu').collection('users');
 		const result = await users.findOne({ "email": email });
 		if (result === null) {
-			const insert = await users.insertOne({ "email": email, username: null, "teams": [] })
+			const insert = await users.insertOne({ "email": email, username: null, "teams": [], isPremium: false })
 		}
+	};
+	const CheckIfUserIsPremium = (user) => {
+		const mongodb = user.mongoClient('mongodb-atlas');
+		const users = mongodb.db('tofu').collection('users');
+		users.findOne({ "email": email }, function (userFromDB) {
+			if (userFromDB['isPremium'] === true) {
+				localStorage.setItem('isPremium', true)
+			} else {
+				localStorage.setItem('isPremium', false);
+			}
+		});
 	};
 	return (
 		<div>

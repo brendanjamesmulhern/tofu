@@ -1,6 +1,7 @@
 import RealmApp from '../config/RealmApp';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = ({ setUser }) => {
 	let history = useHistory();
@@ -8,12 +9,15 @@ const Register = ({ setUser }) => {
 	let [email, setEmail] = useState();
 	let [password, setPassword] = useState();
 	let [passwordConfirm, setPasswordConfirm] = useState();
+	let [priceId, setPriceId] = useState('price_1JOX9MGBUpznK6SDHO2CvKSI');
 	const handleClick = async () => {
 		if (username && email && password === passwordConfirm) {
 			const app = await RealmApp();
 			const result = await app.emailPasswordAuth.registerUser(email, password);
 			if (result === 'undefined') {
-				history.push('/login');
+					history.push('/login');
+			} else {
+					alert(result);
 			};
 		};
 	};

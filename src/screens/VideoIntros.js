@@ -1,34 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import firebase from 'firebase/app';
-import "firebase/storage";
-import "firebase/firestore";
 import Video from '../components/Video';
+import axios from 'axios';
 
 const VideoIntros = () => {
-	var storage = firebase.storage();
-	var files = firebase.firestore().collection('videoIntros');
-	/* 
+	let [videos, setVideos] = useState();	 
 	useEffect(() => {
-		files.get().then((querySnapshot) => {
-			querySnapshot.forEach((doc) => {
-				let docs = videosIntros;
-				docs.push(doc);
-				setVideoIntros(doc);
-			});
-		});
-	}, []);
-	*/
+			axios.get('https://api-tofu.herokuapp.com/getAllVideoIntros').then(res => {
+				let usersFromDB = res['data'];
+				let videos = [];
+				usersFromDB.map(user => {
+					user.videos.map(video => {
+						videos.push(video);
+					})
+				})
+				setVideos(videos);
+			})
+	}, [])
 	return (
 		<div className="flex flex-col justify-between h-screen">
 			<Navbar />
-			<div className="bg-gray-400">
-				{/* { videoIntros ? videoIntros.map(intro => (
-					{/* <Video url={intro.url} /> }
-				)) : <></> } 
-				*/}
-			</div>
+			{ videos ? videos.sort((firstItem, secondItem) => secondItem.date - firstItem.date).map(video => (
+				<div key={video._id}>
+					<Video url={video.url} />
+				</div>
+			)) : <></> }
+			<a className="text-center" href={`/upload`}>Upload</a>
 			<Footer />
 		</div>
 	);

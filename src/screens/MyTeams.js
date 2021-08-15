@@ -12,7 +12,8 @@ const MyTeams = () => {
 	const getMyUser = async () => {
 		const app = await RealmApp();
 		const mongodb = app.currentUser.mongoClient('mongodb-atlas');
-		const users = mongodb.db('tofu').collection('users');		let email = localStorage.getItem('email');
+		const users = mongodb.db('tofu').collection('users');		
+		let email = localStorage.getItem('email');
 		users.findOne({ "email": email }).then(res => {
 			setTeams(res['teams']);
 		}).catch(console.error);

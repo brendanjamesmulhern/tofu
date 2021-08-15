@@ -2,8 +2,8 @@ import React from 'react';
 
 const Video = ({ url }) => {
 	return (
-		<video className="w-screen h-screen bg-black">
-			<source src={url} />
+		<video controls className="w-full h-full bg-black">
+			<source src={url} type="video/mp4" />
 		</video>
 	);
 };
