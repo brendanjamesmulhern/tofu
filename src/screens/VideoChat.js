@@ -46,7 +46,7 @@ class VideoChat extends React.Component {
               stream={stream}
             />
           );
-        })}89
+        })}
       </div>
     );
   }

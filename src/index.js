@@ -37,10 +37,10 @@ ReactDOM.render(
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <Router>
           <Route exact path="/" component={Register} />
-          <Route path="/profile/:id" component={Profile} />
+          <Route path="/:userId" component={Profile} />
           <Route path="/join" component={PayGuard} />
           <Route path="/upload" component={VideoIntroUpload} />
-          <Route path="/GenerateLink" component={GenerateLink} />
+          <Route path="/generate" component={GenerateLink} />
           <Route path="/intros" component={VideoIntros} />
           <Route path="/path" component={App} />
           <Route path="/login" component={Login} />

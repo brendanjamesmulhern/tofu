@@ -36,19 +36,13 @@ const PayGuard = () => {
     } else {
         history.push('/intros');
     }
- }
- const logOut = () => {
-    localStorage.removeItem('email');
-    localStorage.removeItem('isPremium');
-    window.location.reload();
  };
  return (
- 		<div>
+ 		<div className="flex flex-col h-screen">
  			<Navbar />
- 				<div className="flex flex-col h-screen justify-between">
+ 				<div className="flex flex-col mt-40">
                     <div>
-                        <div>Sign Up For Free Trial</div>
-                         // More information
+                        <div className="text-center">Sign Up For Free Trial</div>
                     </div>
  					<form onSubmit={createCustomer}>
                         <CardElement
@@ -65,11 +59,11 @@ const PayGuard = () => {
                                 },
                             }}
                             className="mx-20 my-10" />
-                        <button className="justify-center" type="submit" disabled={!stripe}>Pay</button>
-                        <button onClick={logOut}>Log Out</button>
+                            <div className="text-center">
+                                <button className="mx-2" type="submit" disabled={!stripe}>Start Free Trial</button>
+                            </div>
                     </form>
  				</div>
- 			<Footer className="sticky" />
  		</div>
  	);
 };
