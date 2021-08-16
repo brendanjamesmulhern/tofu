@@ -8,7 +8,13 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const VideoIntroUpload =() => {
+	let [file, setFile] = useState();
+	let [name, setName] = useState();
+	const storage = firebase.storage();
 	useEffect(() => {
+		navigator.mediaDevices.enumerateDevices().then(res => {
+			console.log(res);
+		});
 		let preview = document.getElementById('preview');
 		let recording = document.getElementById('recording');
 		let startButton = document.getElementById('startButton');
@@ -45,8 +51,8 @@ const VideoIntroUpload =() => {
 		};
 		startButton.addEventListener("click", () => {
 			navigator.mediaDevices.getUserMedia({
-				video: true,
-				audio: true
+				audio: true,
+				video: true
 			}).then(stream => {
 				preview.srcObject = stream;
 				downloadButton.href = stream;
@@ -64,11 +70,6 @@ const VideoIntroUpload =() => {
 			stop(preview.srcObject);
 		}, false);
 	}, [])
-	let [file, setFile] = useState();
-	let [chunks, setChunks] = useState();
-	let [name, setName] = useState();
-	let [mediaRecorder, setMediaRecorder] = useState();
-	const storage = firebase.storage();
 	const getVideoIntros = async () => {
 		var app = await RealmApp();
 		var storageRef = storage.ref();
