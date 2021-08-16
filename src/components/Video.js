@@ -13,7 +13,7 @@ const Video = ({ url }) => {
 		videoReference.current.mute();
 	};
 	return (
-		<video ref={videoReference} className="h-screen w-screen bg-gray-300" onClick={play} onDoubleClick={mute}>
+		<video ref={videoReference} className="h-screen w-screen bg-gray-300" onClick={play}>
 			<source src={url} type="video/mp4" />
 		</video>
 	);
