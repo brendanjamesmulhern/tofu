@@ -10,7 +10,12 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripe_pub_test="pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
 const stripe_pub_live="pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
 
-
+const LoadStripe = async () => {
+	const stripe = await loadStripe(stripe_pub_test, {
+		stripeAccount: localStorage.getItem('user')['stripeId']
+	});
+	return stripe;
+};
 
 const MentorProfile = (props) => {
 	let elements = useElements();
@@ -20,6 +25,7 @@ const MentorProfile = (props) => {
 	let [time, setTime] = useState();
 	let [url, setUrl] = useState();
 	let [accountId, setAccountId] = useState();
+	let [stripe, setStripe] = useState();
 	useEffect(() => {
 		getUser();
 	}, []);
@@ -78,9 +84,8 @@ const MentorProfile = (props) => {
 		})
 	}
 	const doStripeStuff = async (res) => {
-		const stripe = await loadStripe(stripe_pub_test, {
-			stripeAccount: accountId
-		});
+		const stripe = await LoadStripe();
+		setStripe(stripe);
 		const { error, paymentIntent } = await stripe.confirmCardPayment(res['data']['clientSecret'], {
 				type: 'card',
 				card: elements.getElement(CardElement),
