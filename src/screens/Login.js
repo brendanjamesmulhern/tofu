@@ -67,7 +67,9 @@ const Login = () => {
 			stripeId: stripeId
 		};
 		axios.post('https://api-tofu.herokuapp.com/add-new-user', newUser).then(res => {
-			// console.log(res['data']);
+			if (res) {
+				localStorage.setItem('accountId', stripeId);
+			};
 		});
 	};
 	const createStripeUser = () => {

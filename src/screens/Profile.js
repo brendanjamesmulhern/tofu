@@ -75,8 +75,8 @@ const MentorProfile = (props) => {
 		})
 	}
 	const doStripeStuff = async (res, accountId) => {
-		const client_secret = res['data']['client_secret'];
-		stripe.confirmCardPayment(client_secret, {
+		const clientSecret = res['data']['client_secret'];
+		stripe.confirmCardPayment(clientSecret, {
 			payment_method: {
 				card: elements.getElement(CardElement)
 			}
