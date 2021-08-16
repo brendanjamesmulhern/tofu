@@ -49,7 +49,6 @@ const MentorProfile = (props) => {
 				url: url
 			};
 			getStripeAccountId(users);
-			initStripe();
 			axios.post('https://api-tofu.herokuapp.com/book-meeting', out).then(res => {
 				console.log(res['data']);
 			})
@@ -65,20 +64,21 @@ const MentorProfile = (props) => {
 	const getStripeAccountId = async (users) => {
 		const user = await users.findOne({ "email": localStorage.getItem('email') });
 		const accountId = user['stripeId'];
-		setAccountId(accountId);
+		initStripe(accountId);
 	};
-	const initStripe = async () => {
+	const initStripe = async (accountId) => {
 		let out = {
 			stripeId: accountId,
 			price: 9
 		};
+		console.log(out);
 		axios.post('https://api-tofu.herokuapp.com/createPaymentIntent', out).then(res => {
-			doStripeStuff(res);
+			doStripeStuff(res, accountId);
 		})
 	}
-	const doStripeStuff = async (res) => {
+	const doStripeStuff = async (res, accountId) => {
 		const stripe = await loadStripe(stripe_pub_test, {
-			stripeAccount: localStorage.getItem('user')['stripeId']
+			stripeAccount: accountId
 		});
 		setStripe(stripe);
 		const { error, paymentIntent } = await stripe.confirmCardPayment(res['data']['clientSecret'], {
