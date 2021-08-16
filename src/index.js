@@ -13,12 +13,7 @@ import VideoIntros from './screens/VideoIntros';
 import VideoIntroUpload from './screens/VideoIntroUpload';
 import Register from './screens/Register';
 import PayGuard from './screens/PayGuard';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
 import Profile from './screens/Profile';
-
-const stripe_pub_test="pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
-const stripe_pub_live="pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCJE2YgNH7RnLxddgi9w9XPj8FBeD12DO4",
@@ -30,10 +25,7 @@ const firebaseConfig = {
   measurementId: "G-1Q2RHZ4WN6"
 };
 
-const stripePromise = loadStripe(stripe_pub_test);
-
 ReactDOM.render(
-  <Elements stripe={stripePromise}>
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <Router>
           <Route exact path="/" component={Register} />
@@ -48,7 +40,6 @@ ReactDOM.render(
           <Route path="/chat/:id" component={TeamChat} />
           <Route path="/meeting/:sessionId/:token" component={VideoChat} />
         </Router>
-      </FirebaseAppProvider>
-    </Elements>,
+      </FirebaseAppProvider>,
   document.getElementById('root')
 );

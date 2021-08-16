@@ -21,15 +21,9 @@ const Login = () => {
 		const credentials = Realm.Credentials.emailPassword(email, password);
 		const user = await app.logIn(credentials);
 		CheckUser(user);
-		CheckIfUserIsPremium(user);
 		localStorage.setItem('email', email);
 		if (user !== undefined) {
-			localStorage.setItem('user', user);
-			if (localStorage.getItem('email') && localStorage.getItem('isPremium') === true) {
-				history.push('/intros');
-			} else {
-				history.push('/join');
-			}
+			history.push('/intros');
 		} else {
 			alert("Wrong email or password! Please try again!")
 		}
@@ -38,25 +32,13 @@ const Login = () => {
 		const mongodb = user.mongoClient('mongodb-atlas');
 		const users = mongodb.db('tofu').collection('users');
 		const result = await users.findOne({ "email": email });
-		console.log(result);
+		localStorage.setItem('accountId', result['stripeId']);
 		if (result === null) {
 			addUser();
 		};
 	};
-	const CheckIfUserIsPremium = (user) => {
-		const mongodb = user.mongoClient('mongodb-atlas');
-		const users = mongodb.db('tofu').collection('users');
-		users.findOne({ "email": email }, function (userFromDB) {
-			if (userFromDB['isPremium'] === true) {
-				localStorage.setItem('isPremium', true)
-			} else {
-				localStorage.setItem('isPremium', false);
-			}
-		});
-	};
 	const addUser = async () => {
 		let stripeId = await createStripeUser();
-		console.log(stripeId);
 		let newUser = { 
 			"email": email, 
 			username: null, 
@@ -66,11 +48,7 @@ const Login = () => {
 			meetings: [],
 			stripeId: stripeId
 		};
-		axios.post('https://api-tofu.herokuapp.com/add-new-user', newUser).then(res => {
-			if (res) {
-				localStorage.setItem('accountId', stripeId);
-			};
-		});
+		axios.post('https://api-tofu.herokuapp.com/add-new-user', newUser);
 	};
 	const createStripeUser = () => {
 		let out = {};

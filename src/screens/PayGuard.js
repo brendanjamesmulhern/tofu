@@ -4,11 +4,12 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useHistory } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
 
 let stripe_pub_test = "pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
 let stripe_pub_live = "pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
 
-const PayGuard = () => {
+const App = () => {
  let history = useHistory();
  let stripe = useStripe();
  let elements = useElements();
@@ -68,4 +69,13 @@ const PayGuard = () => {
  	);
 };
 
+const stripePromise = loadStripe(stripe_pub_test);
+
+const PayGuard = () => {
+	return (
+		<Elements stripe={stripePromise}>
+			<App />
+		</Elements>
+	);
+}
 export default PayGuard;

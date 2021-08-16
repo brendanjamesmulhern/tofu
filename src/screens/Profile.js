@@ -5,11 +5,12 @@ import BSON from 'bson';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const stripe_pub_test="pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
 const stripe_pub_live="pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
 
-const MentorProfile = (props) => {
+const App = ({ props }) => {
 	let stripe = useStripe();
 	let elements = useElements();
 	let [user, setUser] = useState();
@@ -114,5 +115,21 @@ const MentorProfile = (props) => {
 		</div>
 	);
 };
+
+let accountId = localStorage.getItem('accountId') || "";
+
+console.log(accountId);
+
+const stripePromise = loadStripe(stripe_pub_test, {
+	stripeAccount: accountId
+})
+
+const MentorProfile = (props) => {
+	return (
+		<Elements stripe={stripePromise}>
+			<App props={props} />
+		</Elements>
+	);
+}
 
 export default MentorProfile;
