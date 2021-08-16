@@ -95,7 +95,8 @@ const App = ({ props }) => {
 		<div className="flex flex-col h-screen justify-between">
 			<Navbar />
 			<div>
-				{ user ? <div className="flex flex-col text-center justify-center">
+				{ user ? 
+				<div className="flex flex-col text-center justify-center">
 					<div>{user.email}</div>
 					<div>{user.username}</div>	
 					<div className="flex flex-col items-center">
@@ -109,7 +110,8 @@ const App = ({ props }) => {
 							<button onClick={handleClick}>Pay</button>
 						</form>
 					</div>
-				</div> : <></> }
+				</div> 
+				: <></> }
 			</div>
 			<Footer />
 		</div>
