@@ -14,12 +14,14 @@ const Register = ({ setUser }) => {
 		if (username && email && password === passwordConfirm) {
 			const app = await RealmApp();
 			const result = await app.emailPasswordAuth.registerUser(email, password);
-			if (result === 'undefined') {
-					history.push('/login');
+			if (result === undefined) {
+				history.push('/login');
 			} else {
-					alert(result);
-			};
-		};
+				alert("You are already registered. Please log in.")
+			}
+		} else {
+			alert("Something is wrong with your registration. Please try again.")
+		}
 	};
 	const handleUsername = (e) => {
 		setUsername(e.target.value);

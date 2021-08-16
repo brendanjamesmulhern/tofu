@@ -4,23 +4,33 @@ import RealmApp from '../config/RealmApp';
 import BSON from 'bson';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripe_pub_test="pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
+const stripe_pub_live="pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
+
+
 
 const MentorProfile = (props) => {
+	let elements = useElements();
 	let [user, setUser] = useState();
+	let [users, setUsers] = useState();
 	let [date, setDate] = useState();
 	let [time, setTime] = useState();
+	let [url, setUrl] = useState();
+	let [accountId, setAccountId] = useState();
 	useEffect(() => {
 		getUser();
 	}, []);
 	const getUser = async () => {
-		let userId = props.match.params.userId
-		console.log(userId);
+		let userId = props.match.params.userId;
 		var app = await RealmApp();
 		const mongodb = app.currentUser.mongoClient('mongodb-atlas');
 		const users = mongodb.db('tofu').collection('users');
 		const res =	await users.findOne({ "_id": BSON.ObjectId(userId) });
-		console.log(res);
 		setUser(res);
+		setUsers(users);
 	};
 	const handleDate = (e) => {
 		setDate(e.target.value);
@@ -28,17 +38,59 @@ const MentorProfile = (props) => {
 	const handleTime = (e) => {
 		setTime(e.target.value);
 	}
-	const handleClick = () => {
-		let out = {
-			mentorId: props.match.params.userId,
-			date: date,
-			time: time,
-			payeeEmail: localStorage.getItem('email')
-		};
-		axios.post('https://api-tofu.herokuapp.com/', out).then(res => {
-			console.log(res['data']);
+	const handleClick = (e) => {
+		e.preventDefault();
+		if (date && time) {
+			GenerateLink();
+			let out = {
+				mentorId: props.match.params.userId,
+				date: date,
+				time: time,
+				payeeEmail: localStorage.getItem('email'),
+				url: url
+			};
+			getStripeAccountId(users);
+			initStripe();
+			axios.post('https://api-tofu.herokuapp.com/book-meeting', out).then(res => {
+				console.log(res['data']);
+			})
+		} else {
+			alert('Please enter date and time!');
+		}
+	};
+	const GenerateLink = async () => {
+		axios.get('https://api-tofu.herokuapp.com/getSessionAndToken').then(res => {
+			setUrl(`https://tofu-pied.vercel.app/${res['data']['sessionId']}/${res['data']['token']}`)
 		})
 	};
+	const getStripeAccountId = async (users) => {
+		const user = await users.findOne({ "email": localStorage.getItem('email') });
+		const accountId = user['stripeId'];
+		setAccountId(accountId);
+	};
+	const initStripe = async () => {
+		let out = {
+			stripeId: accountId,
+			price: 9
+		};
+		axios.post('https://api-tofu.herokuapp.com/createPaymentIntent', out).then(res => {
+			doStripeStuff(res);
+		})
+	}
+	const doStripeStuff = async (res) => {
+		const stripe = loadStripe(stripe_pub_test, {
+			stripeAccount: accountId
+		});
+		const { error, paymentIntent } = await stripe.confirmCardPayment(res['data']['clientSecret'], {
+				type: 'card',
+				card: elements.getElement(CardElement),
+			});
+			if (error) {
+				alert(error);
+			} else {
+				console.log(paymentIntent);
+			}
+	}
 	return (
 		<div className="flex flex-col h-screen justify-between">
 			<Navbar />
@@ -52,7 +104,10 @@ const MentorProfile = (props) => {
 							<input onChange={handleDate} type="date" />
 							<input onChange={handleTime} type='time' />
 						</div>
-						<button onClick={handleClick}>Pay With Stripe</button>
+						<form className="w-full" onSubmit={handleClick}>
+							<CardElement className="ml-40 mr-40" />
+							<button type="submit" disabled={!stripe}>Pay</button>
+						</form>
 					</div>
 				</div> : <></> }
 			</div>

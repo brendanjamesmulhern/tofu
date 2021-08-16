@@ -3,11 +3,13 @@ import Navbar from '../components/Navbar';
 import RealmApp from '../config/RealmApp';
 import * as Realm from 'realm-web';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
 	let history = useHistory();
 	let [email, setEmail] = useState();
 	let [password, setPassword] = useState();
+	let [stripeId, setStripeId] = useState();
 	const handleEmail = (e) => {
 		setEmail(e.target.value);
 	};
@@ -24,19 +26,22 @@ const Login = () => {
 		if (user !== undefined) {
 			localStorage.setItem('user', user);
 			if (localStorage.getItem('email') && localStorage.getItem('isPremium') === true) {
-				history.push('/MyTeams');
+				history.push('/intros');
 			} else {
 				history.push('/join');
 			}
-		};
+		} else {
+			alert("Wrong email or password! Please try again!")
+		}
 	};
 	const CheckUser = async (user) => {
 		const mongodb = user.mongoClient('mongodb-atlas');
 		const users = mongodb.db('tofu').collection('users');
 		const result = await users.findOne({ "email": email });
+		console.log(result);
 		if (result === null) {
-			const insert = await users.insertOne({ "email": email, username: null, "teams": [], isPremium: false })
-		}
+			addUser();
+		};
 	};
 	const CheckIfUserIsPremium = (user) => {
 		const mongodb = user.mongoClient('mongodb-atlas');
@@ -47,6 +52,30 @@ const Login = () => {
 			} else {
 				localStorage.setItem('isPremium', false);
 			}
+		});
+	};
+	const addUser = async () => {
+		let stripeId = await createStripeUser();
+		console.log(stripeId);
+		let newUser = { 
+			"email": email, 
+			username: null, 
+			"teams": [], 
+			isPremium: false,
+			videos: [],
+			meetings: [],
+			stripeId: stripeId
+		};
+		axios.post('https://api-tofu.herokuapp.com/add-new-user', newUser).then(res => {
+			// console.log(res['data']);
+		});
+	};
+	const createStripeUser = () => {
+		let out = {};
+		return axios.post('https://api-tofu.herokuapp.com/createStripeAccount', out).then(res => {
+			return res['data']['accountId'];
+		}).catch(err => {
+			console.error(err);
 		});
 	};
 	return (

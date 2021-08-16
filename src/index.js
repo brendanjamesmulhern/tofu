@@ -37,7 +37,7 @@ ReactDOM.render(
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <Router>
           <Route exact path="/" component={Register} />
-          <Route path="/:userId" component={Profile} />
+          <Route path="/profile/:userId" component={Profile} />
           <Route path="/join" component={PayGuard} />
           <Route path="/upload" component={VideoIntroUpload} />
           <Route path="/generate" component={GenerateLink} />
@@ -46,7 +46,7 @@ ReactDOM.render(
           <Route path="/login" component={Login} />
           <Route path="/MyTeams" component={MyTeams} />
           <Route path="/chat/:id" component={TeamChat} />
-          <Route path="/:sessionId/:token" component={VideoChat} />
+          <Route path="/meeting/:sessionId/:token" component={VideoChat} />
         </Router>
       </FirebaseAppProvider>
     </Elements>,
