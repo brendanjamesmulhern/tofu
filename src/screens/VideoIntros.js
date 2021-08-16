@@ -22,13 +22,14 @@ const VideoIntros = () => {
 	return (
 		<div className="flex flex-col justify-between h-screen">
 			<Navbar />
-			{ videos ? videos.sort((firstItem, secondItem) => secondItem.date - firstItem.date).map(video => (
-				<div key={video._id}>
-					<Video url={video.url} />
-				</div>
-			)) : <></> }
-			<a className="text-center" href={`/upload`}>Upload</a>
-			<Footer />
+			<div className="flex flex-col overflow-auto">
+				{ videos ? videos.sort((firstItem, secondItem) => secondItem.date - firstItem.date).map(video => (
+					<div key={video._id} className="-mt-16">
+						<Video url={video.url} />
+					</div>
+				)) : <></> }
+			</div>
+			<Footer className="bottom-0 relative" />
 		</div>
 	);
 };

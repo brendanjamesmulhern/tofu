@@ -2,6 +2,8 @@ import RealmApp from '../config/RealmApp';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Register = ({ setUser }) => {
 	let history = useHistory();
@@ -36,17 +38,15 @@ const Register = ({ setUser }) => {
 		setPasswordConfirm(e.target.value);
 	};
 	return (
-		<div className="bg-white w-screen h-screen">
-			<div className="bg-white mt-5">
+		<div className="bg-white w-screen h-screen flex flex-col justify-between">
+			<Navbar />
+			<div className="bg-white">
 				<div className="text-center flex flex-col items-center">
-					<div className="flex">
-						<div className="text-bold text-center text-6xl">tofu</div>
-					</div>
-					<div className="flex flex-col mt-5">
-						<div className="mt-2 text-semibold text-lg mx-5">Hello and welcone to tofu! A chat app for teams.</div>
+					<div className="flex flex-col">
+						<div className="mt-2 text-semibold text-lg mx-5">Hello and welcone to tofu! A space for forming meaningful connections.</div>
 						<div className="mt-2 text-semibold text-lg mx-5">If you wish to join and create your own team please fill out the form below.</div>
 					</div>
-					<div className="flex flex-col bg-gray-200 px-10 py-10">
+					<div className="flex flex-col bg-gray-200 px-10 py-5">
 						<div className="text-center text-bold text-4xl pb-5">Register</div>
 						<input onChange={handleUsername} type="text" placeholder="Username" className="text-center text-semibold text-lg border border-gray-400 mt-5" />
 						<input onChange={handleEmail} type="email" placeholder="Email" className="text-center text-semibold text-lg border border-gray-400 mt-5" />
@@ -57,6 +57,7 @@ const Register = ({ setUser }) => {
 					</div>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

@@ -4,6 +4,7 @@ import RealmApp from '../config/RealmApp';
 import * as Realm from 'realm-web';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../components/Footer';
 
 const Login = () => {
 	let history = useHistory();
@@ -23,7 +24,7 @@ const Login = () => {
 		CheckUser(user);
 		localStorage.setItem('email', email);
 		if (user !== undefined) {
-			history.push('/intros');
+			history.push('/');
 		} else {
 			alert("Wrong email or password! Please try again!")
 		}
@@ -59,7 +60,7 @@ const Login = () => {
 		});
 	};
 	return (
-		<div>
+		<div className="h-screen flex flex-col justify-between">
 			<Navbar />
 			<div className="bg-white w-screen h-screen flex flex-col">
 				<div className="bg-gray-200 mt-20 mx-10 py-10">
@@ -71,6 +72,7 @@ const Login = () => {
 					</div>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };
