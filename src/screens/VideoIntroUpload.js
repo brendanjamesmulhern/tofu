@@ -60,6 +60,7 @@ const VideoIntroUpload =() => {
 				return new Promise(resolve => preview.onplaying = resolve);
 			}).then(() => startRecording(preview.captureStream(), recordingTimeMS)).then(recordedChunks => {
 				let recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
+				setFIle(recordedBlob);
 				recording.src = URL.createObjectURL(recordedBlob);
 				downloadButton.href = recording.src;
 				downloadButton.download = "RecordedVideo.webm";
