@@ -78,7 +78,7 @@ const MentorProfile = (props) => {
 		})
 	}
 	const doStripeStuff = async (res) => {
-		const stripe = loadStripe(stripe_pub_test, {
+		const stripe = await loadStripe(stripe_pub_test, {
 			stripeAccount: accountId
 		});
 		const { error, paymentIntent } = await stripe.confirmCardPayment(res['data']['clientSecret'], {
