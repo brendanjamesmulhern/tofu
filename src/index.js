@@ -8,8 +8,13 @@ import { FirebaseAppProvider } from 'reactfire';
 import VideoIntros from './screens/VideoIntros';
 import VideoIntroUpload from './screens/VideoIntroUpload';
 import Register from './screens/Register';
-import PayGuard from './screens/PayGuard';
 import Profile from './screens/Profile';
+import SearchVideoIntros from './screens/SearchVideoIntros';
+import MyMeetingsAttended from './screens/MyMeetingsAttended';
+import MyMeetingsHosted from './screens/MyMeetingsHosted';
+import MyStats from './screens/MyStats';
+import MyVideos from './screens/MyVideos';
+// import PayGuard from './screens/PayGuard';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCJE2YgNH7RnLxddgi9w9XPj8FBeD12DO4",
@@ -24,18 +29,17 @@ const firebaseConfig = {
 ReactDOM.render(
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <Router>
-          <Route exact path="/" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route path="/intros" component={VideoIntros} />
-          {/* SearchVideoIntros */}
-          {/* BrowseVideoIntros */}
+          <Route exact path="/" component={VideoIntros} />
+          <Route path="/search" component={SearchVideoIntros} />
           <Route path="/upload" component={VideoIntroUpload} />
           <Route path="/profile/:userId" component={Profile} />
           <Route path="/meeting/:sessionId/:token" component={VideoChat} />
-          {/* MyMeetingsAttended */}
-          {/* MyMeetingsHosted */}
-          {/* MyVideos */}
-          {/* MyStats */}
+          <Route path="/myMeetingsAttended" component={MyMeetingsAttended} />
+          <Route path="/myMeetingsHosted" component={MyMeetingsHosted} />
+          <Route path="/myVideos" component={MyVideos} />
+          <Route path="/myStats" component={MyStats} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
           {/* <Route path="/join" component={PayGuard} /> */}
         </Router>
       </FirebaseAppProvider>,
