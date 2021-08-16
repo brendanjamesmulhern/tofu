@@ -10,13 +10,6 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripe_pub_test="pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
 const stripe_pub_live="pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
 
-const LoadStripe = async () => {
-	const stripe = await loadStripe(stripe_pub_test, {
-		stripeAccount: localStorage.getItem('user')['stripeId']
-	});
-	return stripe;
-};
-
 const MentorProfile = (props) => {
 	let elements = useElements();
 	let [user, setUser] = useState();
@@ -84,7 +77,9 @@ const MentorProfile = (props) => {
 		})
 	}
 	const doStripeStuff = async (res) => {
-		const stripe = await LoadStripe();
+		const stripe = await loadStripe(stripe_pub_test, {
+			stripeAccount: localStorage.getItem('user')['stripeId']
+		});
 		setStripe(stripe);
 		const { error, paymentIntent } = await stripe.confirmCardPayment(res['data']['clientSecret'], {
 				type: 'card',
@@ -109,9 +104,9 @@ const MentorProfile = (props) => {
 							<input onChange={handleDate} type="date" />
 							<input onChange={handleTime} type='time' />
 						</div>
-						<form className="w-full" onSubmit={handleClick}>
+						<form className="w-full">
 							<CardElement className="ml-40 mr-40" />
-							<button type="submit" disabled={!stripe}>Pay</button>
+							<button onClick={handleClick}>Pay</button>
 						</form>
 					</div>
 				</div> : <></> }
