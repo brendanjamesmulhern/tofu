@@ -107,20 +107,20 @@ const VideoIntroUpload =() => {
 		<div className="flex flex-col h-screen justify-between">
 			<Navbar />
 			<div className=" h-screen w-screen flex flex-col items-center z-10">
+			<input type="text" placeholder="Video name" onChange={handleChange} />
+				<button className="mt-20 z-0" onClick={getVideoIntros}>Upload</button>
 				<div id="log"></div>
 				<div className="left">
 					<div id="startButton" className="button">Start</div>
 					<h2>Preview</h2>
-					<video id="preview" width="160" height="120" autoPlay muted></video>		
+					<video id="preview" width="80" height="60" autoPlay muted></video>		
 				</div>	
 				<div className="right">
 					<div id="stopButton" className="button">Stop</div>
 					<h2>Recording</h2>
-					<video id="recording" width="160" height="120" controls></video>
+					<video id="recording" width="80" height="60" controls></video>
 					<a id="downloadButton" className="button">Download</a>
 				</div>
-				<input type="text" placeholder="Video name" onChange={handleChange} />
-				<button className="mt-20 z-0" onClick={getVideoIntros}>Upload</button>
 			</div>
 			<Footer />
 		</div>
