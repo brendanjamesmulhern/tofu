@@ -5,12 +5,12 @@ import BSON from 'bson';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 
 const stripe_pub_test="pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
 const stripe_pub_live="pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
 
 const MentorProfile = (props) => {
+	let stripe = useStripe();
 	let elements = useElements();
 	let [user, setUser] = useState();
 	let [users, setUsers] = useState();
@@ -18,7 +18,6 @@ const MentorProfile = (props) => {
 	let [time, setTime] = useState();
 	let [url, setUrl] = useState();
 	let [accountId, setAccountId] = useState();
-	let [stripe, setStripe] = useState();
 	useEffect(() => {
 		getUser();
 	}, []);
@@ -71,25 +70,25 @@ const MentorProfile = (props) => {
 			stripeId: accountId,
 			price: 9
 		};
-		console.log(out);
 		axios.post('https://api-tofu.herokuapp.com/createPaymentIntent', out).then(res => {
 			doStripeStuff(res, accountId);
 		})
 	}
 	const doStripeStuff = async (res, accountId) => {
-		const stripe = await loadStripe(stripe_pub_test, {
-			stripeAccount: accountId
-		});
-		setStripe(stripe);
-		const { error, paymentIntent } = await stripe.confirmCardPayment(res['data']['clientSecret'], {
-				type: 'card',
-				card: elements.getElement(CardElement),
-			});
-			if (error) {
-				alert(error);
-			} else {
-				console.log(paymentIntent);
+		const client_secret = res['data']['client_secret'];
+		stripe.confirmCardPayment(client_secret, {
+			payment_method: {
+				card: elements.getElement(CardElement)
 			}
+		}).then(result => {
+			if (result.error) {
+				console.log(result.error.message);
+			} else {
+				if (result.paymentIntent.status === 'succeeded') {
+					console.log("Success!");
+				}
+			}
+		})
 	}
 	return (
 		<div className="flex flex-col h-screen justify-between">
