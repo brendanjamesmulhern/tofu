@@ -12,6 +12,7 @@ const VideoIntroUpload =() => {
 	let history = useHistory();
 	let [file, setFile] = useState();
 	let [name, setName] = useState();
+	let [description, setDescription] = useState();
 	const storage = firebase.storage();
 	// useEffect(() => {
 	// 	navigator.mediaDevices.enumerateDevices().then(res => {
@@ -108,13 +109,31 @@ const VideoIntroUpload =() => {
 	const handleFileChange = (e) => {
 		setFile(e.target.files[0])
 	};
-	return (
+	const onDescriptionChange = (e) => {
+		setDescription(e.target.value);
+	};
+ 	return (
 		<div className="flex flex-col h-screen justify-between">
 			<Navbar />
 			<div className=" h-screen w-screen flex flex-col items-center">
-				<input type="text" placeholder="Video name" onChange={handleChange} className="text-center mt-40" />
-				<input className="mt-10 flex place-items" type="file" onChange={handleFileChange} />
-				<button className="mt-20" onClick={getVideoIntros}>Upload</button>
+				<div className="bg-gray-200 w-screen h-full">
+					<div className="text-center mt-5 text-2xl text-semibold">Video Upload</div>
+					<div className="flex flex-col mt-5 items-center">
+						<div className="mt-2 text-center mr-2">Video Name </div>
+						<input type="text" placeholder="Video name" onChange={handleChange} className="text-center ml-2 mt-2 w-80 border border-gray-400" />
+					</div>
+					<div className="flex flex-col mt-10 place-items">
+						<div className="mt-2 text-center mr-2">Description</div>
+						<input className="mx-2 h-20 mt-2 text-center border border-gray-400 ml-2" type="text" placeholder="Enter video description here." onChange={onDescriptionChange} />
+					</div>
+					<div className="mt-10 flex flex-col items-center">
+						<div className="mt-2 text-center text-md">File</div>
+						<input className="mt-10 text-center flex place-item" type="file" onChange={handleFileChange} />
+					</div>
+					<div className="mt-10 flex justify-center">
+						<button className="mt-5 text-center btn text-xl text-semibold" onClick={getVideoIntros}>Upload</button>
+					</div>
+				</div>
 				{/* <div id="log"></div>
 				<div className="left">
 					<div id="startButton" className="button">Start</div>

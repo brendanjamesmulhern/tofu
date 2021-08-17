@@ -20,7 +20,7 @@ const VideoIntros = () => {
 			})
 	}, [])
 	return (
-		<div className="flex flex-col justify-between h-screen">
+		<div className="flex flex-col justify-between h-full">
 			<Navbar />
 			<div className="flex flex-col overflow-auto">
 				{ videos ? videos.sort((firstItem, secondItem) => secondItem.date - firstItem.date).map(video => (

@@ -72,6 +72,7 @@ const Login = () => {
 						<input className="text-center border border-gray-400 w-1/2 mt-5" type="email" placeholder="Email" onChange={handleEmail} />
 						<input className="text-center border border-gray-400 w-1/2 mt-5" type="password" placeholder="Password" onChange={handlePassword} /> 
 						<button className="btn border border-black mt-10 p-2" onClick={handleClick}>Login</button>
+						<a className="text-center bg-blue-700" href={`/register`}>New to tofu? Register.</a>
 					</div>
 				</div>
 			</div>
