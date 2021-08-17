@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 let arr = [{
-	name: 'Upload Video Introduction',
+	name: 'Upload Videos',
 	address: '/upload'
 }, {
 	name: 'Meetings Hosted',
@@ -28,7 +28,7 @@ const Account = () => {
 					<div className="my-5 text-2xl">Account Links</div>
 				</div>
 				{ arr ? arr.map(link => (
-					<li className="border border-gray-400 h-20 bg-white items-center justify-between">
+					<li className="border border-gray-400 h-20 bg-gray-100 items-center justify-between">
 						<div>
 							<div className="text-md text-center my-6"><a href={`${link.address}`}>{link.name}</a></div>
 						</div>
