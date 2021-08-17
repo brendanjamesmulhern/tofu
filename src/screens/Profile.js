@@ -120,8 +120,6 @@ const App = ({ props }) => {
 
 let accountId = localStorage.getItem('accountId') || "";
 
-console.log(accountId);
-
 const stripePromise = loadStripe(stripe_pub_test, {
 	stripeAccount: accountId
 })

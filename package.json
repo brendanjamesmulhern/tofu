@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/ios": "^3.1.2",
     "@craco/craco": "^6.2.0",
     "@ionic-native/core": "^5.35.0",
     "@ionic-native/video-capture-plus": "^5.35.0",

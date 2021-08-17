@@ -33,27 +33,30 @@ const Login = () => {
 		const mongodb = user.mongoClient('mongodb-atlas');
 		const users = mongodb.db('tofu').collection('users');
 		const result = await users.findOne({ "email": email });
-		localStorage.setItem('accountId', result['stripeId']);
 		if (result === null) {
 			addUser();
 		};
 	};
 	const addUser = async () => {
 		let stripeId = await createStripeUser();
+		let name = localStorage.getItem('personName');
 		let newUser = { 
 			"email": email, 
-			username: null, 
 			"teams": [], 
-			isPremium: false,
-			videos: [],
-			meetings: [],
-			stripeId: stripeId
+			"isPremium": false,
+			"videos": [],
+			"meetings": [],
+			"stripeId": stripeId,
+			"username": email.split("@").splice(0, 1).join(""),
+			"name": name
 		};
+		console.log(name);
 		axios.post('https://api-tofu.herokuapp.com/add-new-user', newUser);
 	};
 	const createStripeUser = () => {
 		let out = {};
 		return axios.post('https://api-tofu.herokuapp.com/createStripeAccount', out).then(res => {
+			localStorage.setItem('accountId', res['data']['accountId']);
 			return res['data']['accountId'];
 		}).catch(err => {
 			console.error(err);

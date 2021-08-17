@@ -30,17 +30,17 @@ ReactDOM.render(
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <Router>
           <Route exact path="/" component={VideoIntros} />
-          <Route path="/search" component={SearchVideoIntros} />
-          <Route path="/upload" component={VideoIntroUpload} />
           <Route path="/profile/:userId" component={Profile} />
           <Route path="/meeting/:sessionId/:token" component={VideoChat} />
           <Route path="/myMeetingsAttended" component={MyMeetingsAttended} />
           <Route path="/myMeetingsHosted" component={MyMeetingsHosted} />
-          <Route path="/myVideos" component={MyVideos} />
           <Route path="/myStats" component={MyStats} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
-          {/* <Route path="/join" component={PayGuard} /> */}
+          <Route path="/myVideos" component={MyVideos} />
+          <Route path="/search" component={SearchVideoIntros} />
+          <Route path="/upload" component={VideoIntroUpload} />
+           {/* <Route path="/join" component={PayGuard} />  */}
         </Router>
       </FirebaseAppProvider>,
   document.getElementById('root')

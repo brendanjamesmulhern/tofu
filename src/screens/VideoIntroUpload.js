@@ -6,71 +6,73 @@ import RealmApp from '../config/RealmApp';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useHistory } from 'react-router-dom';
 
 const VideoIntroUpload =() => {
+	let history = useHistory();
 	let [file, setFile] = useState();
 	let [name, setName] = useState();
 	const storage = firebase.storage();
-	useEffect(() => {
-		navigator.mediaDevices.enumerateDevices().then(res => {
-			console.log(res);
-		});
-		let preview = document.getElementById('preview');
-		let recording = document.getElementById('recording');
-		let startButton = document.getElementById('startButton');
-		let stopButton = document.getElementById('stopButton');
-		let downloadButton = document.getElementById('downloadButton');
-		let logElement = document.getElementById('log');
-		let recordingTimeMS = 5000;
-		const log = (msg) => {
-			logElement.innerHTML += msg + "\n";
-		};
-		const wait = (delayInMS) => {
-			return new Promise(resolve => setTimeout(resolve, delayInMS));
-		}
-		const startRecording = (stream, lengthInMS) => {
-			let recorder = new MediaRecorder(stream);
-			let data = [];
-			recorder.ondataavailable = event => data.push(event.data);
-			recorder.start();
-			log(recorder.state + " for " + (lengthInMS/1000) + "seconds...");
-			let stopped = new Promise((resolve, reject) => {
-				recorder.onstop = resolve;
-				recorder.onerror = event => reject(event.name);
-			});
-			let recorded = wait(lengthInMS).then(
-				() => recorded.state === "recording" && recorder.stop()
-			);
-			return Promise.all([
-				stopped,
-				recorded
-			]).then(() => data);
-		};
-		const stop = (stream) => {
-			stream.getTracks().forEach(track => track.stop());
-		};
-		startButton.addEventListener("click", () => {
-			navigator.mediaDevices.getUserMedia({
-				audio: true,
-				video: true
-			}).then(stream => {
-				preview.srcObject = stream;
-				downloadButton.href = stream;
-				preview.captureStream = preview.captureStream || preview.mozCaptureStream;
-				return new Promise(resolve => preview.onplaying = resolve);
-			}).then(() => startRecording(preview.captureStream(), recordingTimeMS)).then(recordedChunks => {
-				let recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
-				setFile(recordedBlob);
-				recording.src = URL.createObjectURL(recordedBlob);
-				downloadButton.href = recording.src;
-				downloadButton.download = "RecordedVideo.webm";
-				log("Successfully recorded " + recordedBlob.size + " bytes of " + recordedBlob.type + " media.");
-			}).catch(log);
-		}, false);
-		stopButton.addEventListener("click", () => {
-			stop(preview.srcObject);
-		}, false);
-	}, [])
+	// useEffect(() => {
+	// 	navigator.mediaDevices.enumerateDevices().then(res => {
+	// 		console.log(res);
+	// 	});
+	// 	let preview = document.getElementById('preview');
+	// 	let recording = document.getElementById('recording');
+	// 	let startButton = document.getElementById('startButton');
+	// 	let stopButton = document.getElementById('stopButton');
+	// 	let downloadButton = document.getElementById('downloadButton');
+	// 	let logElement = document.getElementById('log');
+	// 	let recordingTimeMS = 5000;
+	// 	const log = (msg) => {
+	// 		logElement.innerHTML += msg + "\n";
+	// 	};
+	// 	const wait = (delayInMS) => {
+	// 		return new Promise(resolve => setTimeout(resolve, delayInMS));
+	// 	}
+	// 	const startRecording = (stream, lengthInMS) => {
+	// 		let recorder = new MediaRecorder(stream);
+	// 		let data = [];
+	// 		recorder.ondataavailable = event => data.push(event.data);
+	// 		recorder.start();
+	// 		log(recorder.state + " for " + (lengthInMS/1000) + "seconds...");
+	// 		let stopped = new Promise((resolve, reject) => {
+	// 			recorder.onstop = resolve;
+	// 			recorder.onerror = event => reject(event.name);
+	// 		});
+	// 		let recorded = wait(lengthInMS).then(
+	// 			() => recorded.state === "recording" && recorder.stop()
+	// 		);
+	// 		return Promise.all([
+	// 			stopped,
+	// 			recorded
+	// 		]).then(() => data);
+	// 	};
+	// 	const stop = (stream) => {
+	// 		stream.getTracks().forEach(track => track.stop());
+	// 	};
+	// 	startButton.addEventListener("click", () => {
+	// 		navigator.mediaDevices.getUserMedia({
+	// 			audio: true,
+	// 			video: true
+	// 		}).then(stream => {
+	// 			preview.srcObject = stream;
+	// 			downloadButton.href = stream;
+	// 			preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+	// 			return new Promise(resolve => preview.onplaying = resolve);
+	// 		}).then(() => startRecording(preview.captureStream(), recordingTimeMS)).then(recordedChunks => {
+	// 			let recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
+	// 			setFile(recordedBlob);
+	// 			recording.src = URL.createObjectURL(recordedBlob);
+	// 			downloadButton.href = recording.src;
+	// 			downloadButton.download = "RecordedVideo.webm";
+	// 			log("Successfully recorded " + recordedBlob.size + " bytes of " + recordedBlob.type + " media.");
+	// 		}).catch(log);
+	// 	}, false);
+	// 	stopButton.addEventListener("click", () => {
+	// 		stop(preview.srcObject);
+	// 	}, false);
+	// }, [])
 	const getVideoIntros = async () => {
 		var app = await RealmApp();
 		var storageRef = storage.ref();
@@ -96,20 +98,24 @@ const VideoIntroUpload =() => {
 				email: email
 			};
 			axios.post('https://api-tofu.herokuapp.com/updateVideoUrls', out).then(res => {
-				console.log(res);
+				history.push('/');
 			});
 		});
 	};
 	const handleChange = (e) => {
 		setName(e.target.value);
 	};
+	const handleFileChange = (e) => {
+		setFile(e.target.files[0])
+	};
 	return (
 		<div className="flex flex-col h-screen justify-between">
 			<Navbar />
-			<div className=" h-screen w-screen flex flex-col items-center z-10">
-			<input type="text" placeholder="Video name" onChange={handleChange} />
-				<button className="mt-20 z-0" onClick={getVideoIntros}>Upload</button>
-				<div id="log"></div>
+			<div className=" h-screen w-screen flex flex-col items-center">
+				<input type="text" placeholder="Video name" onChange={handleChange} className="text-center mt-40" />
+				<input className="mt-10 flex place-items" type="file" onChange={handleFileChange} />
+				<button className="mt-20" onClick={getVideoIntros}>Upload</button>
+				{/* <div id="log"></div>
 				<div className="left">
 					<div id="startButton" className="button">Start</div>
 					<h2>Preview</h2>
@@ -120,7 +126,7 @@ const VideoIntroUpload =() => {
 					<h2>Recording</h2>
 					<video id="recording" width="80" height="60" controls></video>
 					<a id="downloadButton" className="button">Download</a>
-				</div>
+				</div> */}
 			</div>
 			<Footer />
 		</div>
