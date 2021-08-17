@@ -12,8 +12,9 @@ const SearchVideoIntros = () => {
         let out = {
             term: term
         };
-        const result = axios.post('https://api-tofu.herokuapp.com/videoSearch', out);
-        console.log(result);
+        axios.post('https://api-tofu.herokuapp.com/videoSearch', out).then(result => {
+            console.log(result['data']);
+        });
     };
     return (
         <div className="flex flex-col h-screen justify-between">
