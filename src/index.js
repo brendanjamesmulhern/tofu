@@ -14,6 +14,8 @@ import MyMeetingsAttended from './screens/MyMeetingsAttended';
 import MyMeetingsHosted from './screens/MyMeetingsHosted';
 import MyStats from './screens/MyStats';
 import MyVideos from './screens/MyVideos';
+import Account from './screens/Account';
+import Onboarding from './screens/Onboarding';
 // import PayGuard from './screens/PayGuard';
 
 const firebaseConfig = {
@@ -30,11 +32,13 @@ ReactDOM.render(
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <Router>
           <Route exact path="/" component={VideoIntros} />
+          <Route path="/onboarding" component={Onboarding} />
+          <Route path="/account" component={Account} />
           <Route path="/profile/:userId" component={Profile} />
           <Route path="/meeting/:sessionId/:token" component={VideoChat} />
-          <Route path="/myMeetingsAttended" component={MyMeetingsAttended} />
-          <Route path="/myMeetingsHosted" component={MyMeetingsHosted} />
-          <Route path="/myStats" component={MyStats} />
+          <Route path="/attended" component={MyMeetingsAttended} />
+          <Route path="/hosted" component={MyMeetingsHosted} />
+          <Route path="/stats" component={MyStats} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <Route path="/myVideos" component={MyVideos} />

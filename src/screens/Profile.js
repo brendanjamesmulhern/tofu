@@ -18,6 +18,7 @@ const App = ({ props }) => {
 	let [date, setDate] = useState();
 	let [time, setTime] = useState();
 	let [url, setUrl] = useState();
+	let [length, setLength] = useState();
 	let [accountId, setAccountId] = useState();
 	useEffect(() => {
 		getUser();
@@ -91,23 +92,37 @@ const App = ({ props }) => {
 			}
 		})
 	}
+	const handleLength = (e) => {
+		setLength(e.target.value);
+	};	
 	return (
-		<div className="flex flex-col h-screen justify-between">
+		<div className="flex flex-col h-screen justify-between bg-gray-200">
 			<Navbar />
-			<div>
+			<div classNmae="flex flex-col justify-start">
+			<div className="text-center text-2xl text-bold">Book A Meeting</div>
 				{ user ? 
-				<div className="flex flex-col text-center justify-center">
-					<div>{user.email}</div>
-					<div>{user.username}</div>	
+				<div className="text-center mt-2">
+					<div className="text-md text-semibold mt-5">with</div>
+					<div className="text-md text-semibold mt-5">{user.username}</div>	
 					<div className="flex flex-col items-center">
-						<div>Book A Meeting</div>
-						<div className="flex">
-							<input onChange={handleDate} type="date" />
-							<input onChange={handleTime} type='time' />
+						<div className="flex flex-col mt-10">
+							<div className="flex">
+								<div className="text-md text-center mx-10">Click to set time and date of metorship meeting</div>
+							</div>
+							<div className="flex flex-col mt-5 items-center">
+								<input className="mt-2" onChange={handleDate} type="date" />
+								<input className="mt-2" onChange={handleTime} type='time' />
+								<div className="flex mt-2">
+									<div className="mx-2 text-center text-lg text-semibold">Length</div>
+									<input className="mt-2 mx-2 w-20 h-5 text-center" type="number" onChange={handleLength} />
+									<div className="mx-2 text-center text-lg text-semibold">Minutes</div>
+								</div>
+							</div>
 						</div>
 						<form className="w-full">
-							<CardElement className="ml-40 mr-40" />
-							<button onClick={handleClick}>Pay</button>
+							<div className="text-lg mt-10 text-semibold">Pay for mentorship meeting here</div>
+							<CardElement className="mx-10 bg-white my-5 py-2 px-2" />
+							<button className="btn text-center text-lg text-semibold" onClick={handleClick}><img height={150} width={150} src={'/payWithStripe.png'} /></button>
 						</form>
 					</div>
 				</div> 
