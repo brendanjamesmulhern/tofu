@@ -92,7 +92,7 @@ const VideoIntroUpload =() => {
 	};
 	const doMongoDBStuff =  async (snapshot, videoIntroRef) => {
 		videoIntroRef.getDownloadURL().then(url => {
-			let newVideo = { "url": url, date: new Date().toISOString() };
+			let newVideo = { "url": url, date: new Date().toISOString(), description: description };
 			let email = localStorage.getItem('email');
 			let out = {
 				newVideo: newVideo,
