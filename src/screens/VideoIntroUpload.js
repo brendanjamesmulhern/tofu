@@ -92,15 +92,24 @@ const VideoIntroUpload =() => {
 	};
 	const doMongoDBStuff =  async (snapshot, videoIntroRef) => {
 		videoIntroRef.getDownloadURL().then(url => {
-			let newVideo = { "url": url, date: new Date().toISOString(), description: description };
-			let email = localStorage.getItem('email');
-			let out = {
-				newVideo: newVideo,
-				email: email
-			};
-			axios.post('https://api-tofu.herokuapp.com/updateVideoUrls', out).then(res => {
-				history.push('/');
-			});
+			if (url && description && name) {
+				let newVideo = { 
+					"name": name, 
+					"url": url, 
+					"date": new Date().toISOString(), 
+					"description": description 
+				};
+				let email = localStorage.getItem('email');
+				let out = {
+					newVideo: newVideo,
+					email: email
+				};
+				axios.post('https://api-tofu.herokuapp.com/updateVideoUrls', out).then(res => {
+					history.push('/');
+				});
+			} else {
+				alert("Please upload video or set description")
+			}
 		});
 	};
 	const handleChange = (e) => {
@@ -119,7 +128,7 @@ const VideoIntroUpload =() => {
 				<div className="bg-gray-200 w-screen h-full">
 					<div className="text-center mt-5 text-2xl text-semibold">Video Upload</div>
 					<div className="flex flex-col mt-5 items-center">
-						<div className="mt-2 text-center mr-2">Video Name </div>
+						<div className="mt-2 text-center mr-2">Video Name</div>
 						<input type="text" placeholder="Video name" onChange={handleChange} className="text-center ml-2 mt-2 w-80 border border-gray-400" />
 					</div>
 					<div className="flex flex-col mt-10 place-items">

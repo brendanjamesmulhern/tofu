@@ -20,22 +20,26 @@ const VideoIntros = () => {
 			})
 	}, [])
 	return (
-		<div className="flex flex-col justify-between h-full">
+		<div className="flex flex-col justify-between h-screen">
 			<Navbar />
-			<div className="flex flex-col overflow-auto">
+			<div className="flex flex-col overflow-auto -mt-20">
 				{ videos ? videos.sort((firstItem, secondItem) => secondItem.date - firstItem.date).map(video => (
-					<div key={video.video._id}>
-						<div className="flex">
-							{console.log(video)}
-							<div className="justify-start text-sm">{video.user.username}</div>
-							<div className="justify-center text-sm"><a href={`/profile/${video.user._id}`}>Visit Profile</a></div>
-							<div className="justify-end text-sm">{video.video.date}</div>
+					<div key={video.video._id} className="flex flex-col -mt-8">
+						<div className="flex flex-col justify-between mb-40">
+						<div className="text-center text-lg text-bold mt-8">{video.video.name}</div>
+							<div className="text-center text-md text-semibold mt-8"><a href={`/profile/${video.user._id}`}>{video.user.username}</a></div>
+							<div className="text-center text-sm mt-8">{video.video.date.split("T").splice(0, 1).join("")} {video.video.date.split("T").splice(1, 2).splice(0, 7).join("")}</div>
 						</div>
-						<Video url={video.video.url} />
+						<div className="flex place-items -mt-40">
+							<Video url={video.video.url} />
+						</div>
+						<div className="text-center">
+							<div className="text-md mt-10">{video.video.description}</div>
+						</div>
 					</div>
 				)) : <></> }
 			</div>
-			<Footer className="bottom-0 relative" />
+			<Footer />
 		</div>
 	);
 };
