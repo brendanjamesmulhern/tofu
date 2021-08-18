@@ -31,7 +31,7 @@ const Account = () => {
 	return (
 		<div className="h-screen bg-gray-200 justify-between flex flex-col">
 			<Navbar />
-			<ul className="h-full flex flex-col justify-between my-5">
+			<ul className="h-full flex flex-col justify-between my-5 overflow-auto">
 				<div className="border border-gray-400 h-20 bg-white text-center">
 					<div className="my-5 text-2xl">Account Links</div>
 				</div>
