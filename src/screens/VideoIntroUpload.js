@@ -75,6 +75,7 @@ const VideoIntroUpload =() => {
 	// 	}, false);
 	// }, [])
 	const getVideoIntros = async () => {
+		if (localStorage.getItem('onboarded') === true) {
 		var app = await RealmApp();
 		var storageRef = storage.ref();
 		var videoIntroRef = storageRef.child('videoIntros/' + name.split(" ").join("") + '.mp4');
@@ -88,6 +89,9 @@ const VideoIntroUpload =() => {
 						alert("please login to upload")
 					}
 				});
+		}
+		} else {
+			alert("You must first onboard to upload video introductions!");
 		}
 	};
 	const doMongoDBStuff =  async (snapshot, videoIntroRef) => {
