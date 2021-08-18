@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const MyMeetingsAttended = () => {
     let [meetings, setMeetings] = useState();
@@ -11,18 +12,37 @@ const MyMeetingsAttended = () => {
         };
         axios.post('https://api-tofu.herokuapp.com/getMeetingsAttended', out).then(res => {
             setMeetings(res['data']);
-        })
-    }, [])
+        });
+    }, []);
     return (
         <div className="flex flex-col h-screen justify-between bg-gray-200">
             <Navbar />
-            <div>
+            <div className="text-center -mt-52">My Attended Meetings</div>
+            <ul>
                 { meetings ? meetings.sort((a, b) => b.date - a.date ).map(meeting => (
-                    <div>
-                        
-                    </div>
+                    <li key={meeting._id} className="flex flex-col bg-white">
+                        <div className="flex justify-between mx-20">
+                            <div className="mr-2">
+                                <div className="text-center">{meeting.date.split("T").splice(0, 1)}</div>
+                            </div>
+                            <div className="ml-2">
+                                <div className="text-center">{meeting.time}</div>
+                            </div>
+                        </div>
+                        <div className="flex justify-between">
+                            <div className="mx-10">
+                                <div className="text-center">{meeting.members[0].username}</div>
+                            </div>
+                            <div className="mx-10">
+                                <div className="text-center">{meeting.members[1].username}</div>
+                            </div>
+                            <div className="mx-10">
+                                <Link className="text-center text-blue-700" to={`${meeting.url}`} target="_blank">Link</Link>
+                            </div>
+                        </div>
+                    </li>
                 )) : <div className="text-center text-xl mt-10">No Meetings</div>}
-            </div>
+            </ul>
             <Footer />
         </div>
     );

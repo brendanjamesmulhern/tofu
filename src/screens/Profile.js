@@ -43,7 +43,6 @@ const App = ({ props }) => {
 	const handleClick = (e) => {
 		e.preventDefault();
 		if (date && time) {
-			GenerateLink();
 			let out = {
 				mentorId: props.match.params.userId,
 				date: date,
@@ -90,6 +89,7 @@ const App = ({ props }) => {
 			} else {
 				if (result.paymentIntent.status === 'succeeded') {
 					console.log("Success!");
+					GenerateLink();
 					history.push('/attended');
 				}
 			}
