@@ -86,7 +86,7 @@ const App = ({ props }) => {
 			}
 		}).then(result => {
 			if (result.error) {
-				// console.log(result.error.message);
+				alert(result.error.message);
 			} else {
 				if (result.paymentIntent.status === 'succeeded') {
 					// console.log("Success!");
