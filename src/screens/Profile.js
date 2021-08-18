@@ -52,7 +52,7 @@ const App = ({ props }) => {
 				};
 				getStripeAccountId(users);
 				axios.post('https://api-tofu.herokuapp.com/book-meeting', out).then(res => {
-					console.log(res['data']);
+					// console.log(res['data']);
 				});
 			});
 			} else {
@@ -86,10 +86,10 @@ const App = ({ props }) => {
 			}
 		}).then(result => {
 			if (result.error) {
-				console.log(result.error.message);
+				// console.log(result.error.message);
 			} else {
 				if (result.paymentIntent.status === 'succeeded') {
-					console.log("Success!");
+					// console.log("Success!");
 					history.push('/attended');
 				}
 			}

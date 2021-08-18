@@ -15,7 +15,7 @@ const SearchVideoIntros = () => {
             term: term
         };
         axios.post('https://api-tofu.herokuapp.com/videoSearch', out).then(result => {
-            console.log(result['data']);
+            // console.log(result['data']);
             let videos = [];
             result['data'].map(user => {
                 user['videos'].map(video => {
@@ -23,7 +23,7 @@ const SearchVideoIntros = () => {
                 });
             });
             setVideos(videos);
-            console.log(videos);
+            // console.log(videos);
         });
     };
     return (

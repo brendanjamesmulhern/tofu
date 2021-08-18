@@ -50,7 +50,7 @@ const Login = () => {
 			"username": email.split("@").splice(0, 1).join(""),
 			"name": name
 		};
-		console.log(name);
+		// console.log(name);
 		axios.post('https://api-tofu.herokuapp.com/add-new-user', newUser);
 	};
 	const createStripeUser = () => {
