@@ -42,21 +42,22 @@ const App = ({ props }) => {
 	const handleClick = (e) => {
 		e.preventDefault();
 		if (date && time) {
-			let url = GenerateLink();
-			let out = {
-				mentorId: props.match.params.userId,
-				date: date,
-				time: time,
-				payeeEmail: localStorage.getItem('email'),
-				url: url
-			};
-			getStripeAccountId(users);
-			axios.post('https://api-tofu.herokuapp.com/book-meeting', out).then(res => {
-				console.log(res['data']);
-			})
-		} else {
-			alert('Please enter date and time!');
-		}
+			GenerateLink().then(url => {
+				let out = {
+					mentorId: props.match.params.userId,
+					date: date,
+					time: time,
+					payeeEmail: localStorage.getItem('email'),
+					url: url
+				};
+				getStripeAccountId(users);
+				axios.post('https://api-tofu.herokuapp.com/book-meeting', out).then(res => {
+					console.log(res['data']);
+				});
+			});
+			} else {
+				alert('Please enter date and time!');
+			}
 	};
 	const GenerateLink = () => {
 		return axios.get('https://api-tofu.herokuapp.com/getSessionAndToken').then(res => {

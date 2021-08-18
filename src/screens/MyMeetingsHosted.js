@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const MyMeetingsHosted = () => {
+    let history = useHistory();
     let [meetings, setMeetings] = useState();
     useEffect(() => {
         let out = {
@@ -14,6 +15,9 @@ const MyMeetingsHosted = () => {
             setMeetings(res['data']);
         });
     }, []);
+    const handleUrl = (url) => {
+        history.push(url, "_blank");
+    };
     return (
         <div className="flex flex-col h-screen justify-between bg-gray-200">
             <Navbar />
@@ -37,7 +41,7 @@ const MyMeetingsHosted = () => {
                                 <div className="text-center">{meeting.members[1].username}</div>
                             </div>
                             <div className="mx-10">
-                                <Link className="text-center text-blue-700" to={`${meeting.url}`} target="_blank">Link</Link>
+                                <button className="text-center text-blue-700" onClick={handleUrl.bind(this, meeting.url)}>Link</button>
                             </div>
                         </div>
                     </li>
