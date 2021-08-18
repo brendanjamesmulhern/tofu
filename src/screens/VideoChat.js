@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { OTPublisher, createSession, OTSubscriber } from 'opentok-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import RealmApp from '../config/RealmApp';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import OT from '@opentok/client';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const secret = "fb557b9b880c278439a508c66dbb85be03552739";
 const apiKey = "47306554";
@@ -35,18 +35,21 @@ class VideoChat extends React.Component {
  
   render() {
     return (
-      <div>
-        <OTPublisher session={this.sessionHelper.session} />
- 
-        {this.state.streams.map(stream => {
-          return (
-            <OTSubscriber
-              key={stream.id}
-              session={this.sessionHelper.session}
-              stream={stream}
-            />
-          );
-        })}
+      <div className="flex flex-col h-screen justify-between">
+        <Navbar />
+        <div>
+          <OTPublisher session={this.sessionHelper.session} />
+          {this.state.streams.map(stream => {
+            return (
+              <OTSubscriber
+                key={stream.id}
+                session={this.sessionHelper.session}
+                stream={stream}
+              />
+            );
+          })}
+        </div>
+        <Footer />
       </div>
     );
   }
