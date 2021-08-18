@@ -16,7 +16,7 @@ const MyMeetingsHosted = () => {
         });
     }, []);
     const handleUrl = (url) => {
-        history.push(url, "_blank");
+        window.open(url, "_blank");
     };
     return (
         <div className="flex flex-col h-screen justify-between bg-gray-200">

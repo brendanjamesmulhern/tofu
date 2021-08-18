@@ -61,7 +61,7 @@ const App = ({ props }) => {
 	};
 	const GenerateLink = () => {
 		return axios.get('https://api-tofu.herokuapp.com/getSessionAndToken').then(res => {
-			return `https://tofu-pied.vercel.app/${res['data']['sessionId']}/${res['data']['token']}`;
+			return `https://tofu-pied.vercel.app/meeting/${res['data']['sessionId']}/${res['data']['token']}`;
 		})
 	};
 	const getStripeAccountId = async (users) => {
