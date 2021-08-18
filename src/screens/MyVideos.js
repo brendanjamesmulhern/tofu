@@ -10,7 +10,7 @@ const MyVideos = () => {
     }, [])
     const getVideos = () => {
         let out = {
-            email: email
+            email: localStorage.getItem('email')
         };
         axios.post('https://api-tofu.herokuapp.com/myVideos', out).then(res => {
             setVideos(res['data']);
@@ -31,7 +31,7 @@ const MyVideos = () => {
                         <div>{video.date.split("T").splice(0, 1).join("")}</div>
                         <div>{video.name}</div>
                         <div>{video.description}</div>
-                        <button onClick={handleDelete.bind(this, video_id)}>Delete</button>
+                        <button onClick={handleDelete.bind(this, video['_id')}>Delete</button>
                     </li>
                 )) : <></> }
             </ul>
