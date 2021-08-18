@@ -19,7 +19,6 @@ const App = ({ props }) => {
 	let [users, setUsers] = useState();
 	let [date, setDate] = useState();
 	let [time, setTime] = useState();
-	let [url, setUrl] = useState();
 	let [length, setLength] = useState();
 	let [accountId, setAccountId] = useState();
 	useEffect(() => {
@@ -43,6 +42,7 @@ const App = ({ props }) => {
 	const handleClick = (e) => {
 		e.preventDefault();
 		if (date && time) {
+			let url = GenerateLink();
 			let out = {
 				mentorId: props.match.params.userId,
 				date: date,
@@ -58,9 +58,9 @@ const App = ({ props }) => {
 			alert('Please enter date and time!');
 		}
 	};
-	const GenerateLink = async () => {
-		axios.get('https://api-tofu.herokuapp.com/getSessionAndToken').then(res => {
-			setUrl(`https://tofu-pied.vercel.app/${res['data']['sessionId']}/${res['data']['token']}`)
+	const GenerateLink = () => {
+		return axios.get('https://api-tofu.herokuapp.com/getSessionAndToken').then(res => {
+			return `https://tofu-pied.vercel.app/${res['data']['sessionId']}/${res['data']['token']}`;
 		})
 	};
 	const getStripeAccountId = async (users) => {
@@ -89,7 +89,6 @@ const App = ({ props }) => {
 			} else {
 				if (result.paymentIntent.status === 'succeeded') {
 					console.log("Success!");
-					GenerateLink();
 					history.push('/attended');
 				}
 			}
