@@ -15,6 +15,9 @@ let arr = [{
 	name: 'Stripe Onboarding',
 	address: '/onboarding'
 }, {
+	name: 'My Videos',
+	address: '/myVideos'
+}, {
 	name: 'Earning Statistics',
 	address: '/stats'
 }];
