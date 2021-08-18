@@ -6,11 +6,13 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { useHistory } from 'react-router-dom';
 
 const stripe_pub_test="pk_test_51JOX0yGBUpznK6SDeng5bRzhbSBTemXnyAFu1AMETLXkGVHgvSVVa5Nu53xHKe1oC1csy7EXJ0XdRPIYwnY8IEge00ue7Fvlib";
 const stripe_pub_live="pk_live_51JOX0yGBUpznK6SDsUcITRKiQoDuGPSyVuWAjddo4DB8n4aRoDYn2rY8Ke26ZRJShBAVjINzXYsUeqcClzgrhxQN00BzHAMpg0";
 
 const App = ({ props }) => {
+	let history = useHistory();
 	let stripe = useStripe();
 	let elements = useElements();
 	let [user, setUser] = useState();
@@ -88,6 +90,7 @@ const App = ({ props }) => {
 			} else {
 				if (result.paymentIntent.status === 'succeeded') {
 					console.log("Success!");
+					history.push('/attended');
 				}
 			}
 		})
@@ -98,7 +101,7 @@ const App = ({ props }) => {
 	return (
 		<div className="flex flex-col h-screen justify-between bg-gray-200">
 			<Navbar />
-			<div classNmae="flex flex-col justify-start">
+			<div className="flex flex-col justify-start">
 			<div className="text-center text-2xl text-bold">Book A Meeting</div>
 				{ user ? 
 				<div className="text-center mt-2">
@@ -106,7 +109,7 @@ const App = ({ props }) => {
 					<div className="text-md text-semibold mt-5">{user.username}</div>	
 					<div className="flex flex-col items-center">
 						<div className="flex flex-col mt-10">
-							<div className="flex">
+							<div className="flex mx-10">
 								<div className="text-md text-center mx-10">Click to set time and date of metorship meeting</div>
 							</div>
 							<div className="flex flex-col mt-5 items-center">
