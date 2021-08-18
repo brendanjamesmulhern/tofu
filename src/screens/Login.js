@@ -47,7 +47,6 @@ const Login = () => {
 		let out = {
 			accountId: localStorage.getItem('accountId')
 		};
-		console.log(out);
 		return axios.post('https://api-tofu.herokuapp.com/checkIfOnboarded', out).then(res => {
 			localStorage.setItem('onboarded', res['data']['payouts_enabled']);
 			return res['data']['payouts_enabled'];
