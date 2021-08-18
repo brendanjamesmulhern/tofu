@@ -23,6 +23,11 @@ let arr = [{
 }];
 
 const Account = () => {
+	const handleLogOut  = () => {
+		localStorage.removeItem('accountId');
+		localStorage.removeItem('email');
+		window.location.reload();
+	};	
 	return (
 		<div className="h-screen bg-gray-200 justify-between flex flex-col">
 			<Navbar />
@@ -37,6 +42,11 @@ const Account = () => {
 						</div>
 					</li>
 				)) : <div className="text-center my-10 text-xl">No Links</div> }
+				<li className="border border-gray-400 h-20 bg-gray-100 items-center justify-between">
+						<div>
+							<button className="text-md text-center my-6" onClick={handleLogOut}>Log Out</button>
+						</div>
+					</li>
 			</ul>
 			<Footer />
 		</div>
