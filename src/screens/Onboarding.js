@@ -9,9 +9,8 @@ const Onboarding = () => {
 		getUrl();
 	}, [])
 	const getUrl = () => {
-		let accountId = localStorage.getItem('accountId');
 		let out = { 
-			accountId: accountId
+			accountId:  localStorage.getItem('accountId')
 		};
 		axios.post('https://api-tofu.herokuapp.com/createStripeUrl', out).then(res => {
 			setUrl(res['data']['url']);

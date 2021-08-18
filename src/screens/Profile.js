@@ -138,7 +138,7 @@ const App = ({ props }) => {
 
 let accountId = localStorage.getItem('accountId') || "";
 
-const stripePromise = loadStripe(stripe_pub_test, {
+const stripePromise = loadStripe(stripe_pub_live, {
 	stripeAccount: accountId
 })
 

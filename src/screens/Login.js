@@ -24,7 +24,13 @@ const Login = () => {
 		CheckUser(user);
 		localStorage.setItem('email', email);
 		if (user !== undefined) {
-			history.push('/');
+			checkIfOnboarded().then(res => {
+				if (res === true) {
+					history.push('/');
+				} else {
+					history.push('/onboarding');
+				};
+			});
 		} else {
 			alert("Wrong email or password! Please try again!")
 		}
@@ -37,8 +43,20 @@ const Login = () => {
 			addUser();
 		};
 	};
+	const checkIfOnboarded = () => {
+		let out = {
+			accountId: localStorage.getItem('accountId')
+		};
+		console.log(out);
+		return axios.post('https://api-tofu.herokuapp.com/checkIfOnboarded', out).then(res => {
+			localStorage.setItem('onboarded', res['data']);
+			console.log(res['data']);
+			return res['data']['details_submitted'];
+		});
+	};	
 	const addUser = async () => {
 		let stripeId = await createStripeUser();
+		setStripeId(stripeId);
 		let name = localStorage.getItem('personName');
 		let newUser = { 
 			"email": email, 
