@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useHistory } from 'react-router-dom';'
 
 let arr = [{
 	name: 'Upload Videos',
@@ -23,10 +24,11 @@ let arr = [{
 }];
 
 const Account = () => {
+	let history = useHistory();
 	const handleLogOut  = () => {
 		localStorage.removeItem('accountId');
 		localStorage.removeItem('email');
-		window.location.reload();
+		history.push('/');
 	};	
 	return (
 		<div className="h-screen bg-gray-200 justify-between flex flex-col">
@@ -44,7 +46,7 @@ const Account = () => {
 				)) : <div className="text-center my-10 text-xl">No Links</div> }
 				<li className="border border-gray-400 h-20 bg-gray-100 items-center justify-between">
 						<div>
-							<button className="text-md text-center my-6" onClick={handleLogOut}>Log Out</button>
+							<button className="text-md my-6" onClick={handleLogOut}><h1 className="text-center">Log Out</h1></button>
 						</div>
 					</li>
 			</ul>
