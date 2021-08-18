@@ -49,9 +49,8 @@ const Login = () => {
 		};
 		console.log(out);
 		return axios.post('https://api-tofu.herokuapp.com/checkIfOnboarded', out).then(res => {
-			localStorage.setItem('onboarded', res['data']);
-			console.log(res['data']);
-			return res['data']['details_submitted'];
+			localStorage.setItem('onboarded', res['data']['payouts_enabled']);
+			return res['data']['payouts_enabled'];
 		});
 	};	
 	const addUser = async () => {
