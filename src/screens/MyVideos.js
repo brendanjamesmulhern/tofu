@@ -31,7 +31,7 @@ const MyVideos = () => {
                         <div>{video.date.split("T").splice(0, 1).join("")}</div>
                         <div>{video.name}</div>
                         <div>{video.description}</div>
-                        <button onClick={handleDelete.bind(this, video['_id')}>Delete</button>
+                        <button onClick={handleDelete.bind(this, video._id)}>Delete</button>
                     </li>
                 )) : <></> }
             </ul>
