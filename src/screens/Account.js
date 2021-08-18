@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useHistory } from 'react-router-dom';'
+import { useHistory } from 'react-router-dom';
 
 let arr = [{
 	name: 'Upload Videos',
