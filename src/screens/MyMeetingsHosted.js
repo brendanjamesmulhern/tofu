@@ -29,6 +29,7 @@ const MyMeetingsHosted = () => {
         axios.post('https://api-tofu.herokuapp.com/approveMeeting', out).then(res => {
             console.log(res['data']);
         });
+        window.location.reload();
     };
     const disproveMeeting = (meetingId) => {
         let out = {
@@ -39,6 +40,7 @@ const MyMeetingsHosted = () => {
             console.log(res['data']);
             refund(out);
         });
+        window.location.reload();
     };
     const refund = (out) => {
         axios.post('https://api-tofu.herokuapp.com/refundMeeting', out).then(res => {
@@ -52,6 +54,10 @@ const MyMeetingsHosted = () => {
             <ul>
                 { meetings ? meetings.sort((a, b) => b.date - a.date ).map(meeting => (
                     <li key={meeting._id} className="flex flex-col bg-white">
+                        <div className="flex justify-center">
+                            <h1 className="mr-2">Approved:</h1>
+                            <h2 className="text-md ml-2">{meeting.approved.toString()}</h2>
+                        </div>
                         <div className="flex justify-between mx-20">
                             <div className="mr-2">
                                 <div className="text-center">{meeting.date.split("T").splice(0, 1)}</div>
@@ -61,9 +67,6 @@ const MyMeetingsHosted = () => {
                             </div>
                             <div className="ml-2">
                                 <div className="text-center">{meeting.zone}</div>
-                            </div>
-                            <div className="ml-2">
-                                <div className="text-center">{meeting.approved}</div>
                             </div>
                         </div>
                         <div className="flex justify-between">
@@ -76,11 +79,11 @@ const MyMeetingsHosted = () => {
                             <div className="mx-10">
                                 <button className="text-center text-blue-700" onClick={handleUrl.bind(this, meeting.url)}>Link</button>
                             </div>
-                            <div className="mx-10">
-                                <button onClick={approveMeeting.bind(this, meeting._id)}><CheckIcon /></button>
-                                <button onClick={disproveMeeting.bind(this, meeting._id)}><XIcon /></button>
-                            </div>
                         </div>
+                        <div className="grid grid-cols-3 justify-between">
+                                <button onClick={approveMeeting.bind(this, meeting._id)}><CheckIcon className="text-green-700" height={50} width={50} /></button>
+                                <button className="mx-52" onClick={disproveMeeting.bind(this, meeting._id)}><XIcon className="text-red-700" height={50} width={50} /></button>
+                            </div>
                     </li>
                 )) : <div className="text-center text-xl mt-10">No Meetings</div>}
             </ul>

@@ -40,8 +40,7 @@ const App = ({ props }) => {
 		setTime(e.target.value);
 	}
 	const handleClick = (e) => {
-		e.preventDefault();
-		if (date && time) {
+		if (date && time && localStorage.getItem('email') && localStorage.getItem('onboarded')) {
 			GenerateLink().then(url => {
 				let out = {
 					mentorId: props.match.params.userId,
@@ -129,7 +128,7 @@ const App = ({ props }) => {
 							</div>
 						</div>
 						<form className="w-full">
-							<div className="text-lg mt-10 text-semibold">Pay for mentorship meeting here</div>
+							<div className="text-lg mt-10 text-semibold">Pay for 30 Minute mentorship meeting here</div>
 							<CardElement className="bg-white mx-10 text-4xl" />
 							<button className="btn text-center text-lg text-semibold" onClick={handleClick}><img height={150} width={150} src={'/payWithStripe.png'} /></button>
 						</form>
