@@ -45,8 +45,8 @@ const Account = () => {
 					</li>
 				)) : <div className="text-center my-10 text-xl">No Links</div> }
 				<li className="border border-gray-400 h-20 bg-gray-100 items-center justify-between">
-						<div className="flex items-center">
-							<button className="text-md my-6" onClick={handleLogOut}>Log Out</button>
+						<div>
+							<div className="text-center"><button className="text-md my-6" onClick={handleLogOut}>Log Out</button></div>
 						</div>
 					</li>
 			</ul>
