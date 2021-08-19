@@ -49,7 +49,7 @@ const Login = () => {
 		};
 		return axios.post('https://api-tofu.herokuapp.com/checkIfOnboarded', out).then(res => {
 			localStorage.setItem('onboarded', res['data']['payouts_enabled']);
-			console.log(res['data']);
+			// console.log(res['data']);
 			return res['data']['payouts_enabled'];
 		});
 	};	
