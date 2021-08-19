@@ -75,24 +75,25 @@ const VideoIntroUpload =() => {
 	// 	}, false);
 	// }, [])
 	const getVideoIntros = async () => {
-		if (localStorage.getItem('onboarded') === true) {
-		var app = await RealmApp();
-		var storageRef = storage.ref();
-		var videoIntroRef = storageRef.child('videoIntros/' + name.split(" ").join("") + '.mp4');
-		if (localStorage.getItem('email')) {
-			videoIntroRef.put(file).then((snapshot) => {
-				var mongodb = app.currentUser.mongoClient('mongodb-atlas');
-				var users = mongodb.db('tofu').collection('users');
-				if (snapshot['_delegate']['state'] === 'success') {
-						doMongoDBStuff(snapshot, videoIntroRef);
+		// console.log(localStorage.getItem('onboarded'));
+		if (localStorage.getItem('onboarded')) {
+			var app = await RealmApp();
+			var storageRef = storage.ref();
+			var videoIntroRef = storageRef.child('videoIntros/' + name.split(" ").join("") + '.mp4');
+			if (localStorage.getItem('email')) {
+				videoIntroRef.put(file).then((snapshot) => {
+					var mongodb = app.currentUser.mongoClient('mongodb-atlas');
+					var users = mongodb.db('tofu').collection('users');
+					if (snapshot['_delegate']['state'] === 'success') {
+							doMongoDBStuff(snapshot, videoIntroRef);
 					} else {
 						alert("please login to upload")
 					}
-				});
-		}
-		} else {
-			alert("You must first onboard to upload video introductions!");
-		}
+					});
+			};
+			} else {
+				alert("You must first onboard to upload video introductions!");
+			}
 	};
 	const doMongoDBStuff =  async (snapshot, videoIntroRef) => {
 		videoIntroRef.getDownloadURL().then(url => {

@@ -20,7 +20,7 @@ class VideoChat extends React.Component {
     };
   }
   componentWillMount() {
-	console.log(this.props.match.params)
+	// console.log(this.props.match.params)
     this.sessionHelper = createSession({
       apiKey: apiKey,
       sessionId: this.state.sessionId,
@@ -35,13 +35,13 @@ class VideoChat extends React.Component {
  
   render() {
     return (
-      <div className="flex flex-col h-screen justify-between">
+      <div className="flex flex-col h-screen justify-between bg-gray-200">
         <Navbar />
-        <div>
-          <OTPublisher session={this.sessionHelper.session} />
+        <div className="flex flex-col mx-20">
+          <OTPublisher className="w-screen h-full" session={this.sessionHelper.session} />
           {this.state.streams.map(stream => {
             return (
-              <OTSubscriber
+              <OTSubscriber className="w-screen h-full"
                 key={stream.id}
                 session={this.sessionHelper.session}
                 stream={stream}

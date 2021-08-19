@@ -19,7 +19,7 @@ const App = ({ props }) => {
 	let [users, setUsers] = useState();
 	let [date, setDate] = useState();
 	let [time, setTime] = useState();
-	let [length, setLength] = useState();
+	let [zone, setZone] = useState();
 	let [accountId, setAccountId] = useState();
 	useEffect(() => {
 		getUser();
@@ -47,6 +47,7 @@ const App = ({ props }) => {
 					mentorId: props.match.params.userId,
 					date: date,
 					time: time,
+					zone: zone,
 					payeeEmail: localStorage.getItem('email'),
 					url: url
 				};
@@ -95,8 +96,8 @@ const App = ({ props }) => {
 			}
 		})
 	}
-	const handleLength = (e) => {
-		setLength(e.target.value);
+	const handleZone = (e) => {
+		setZone(e.target.value);
 	};	
 	return (
 		<div className="flex flex-col h-screen justify-between bg-gray-200">
@@ -113,18 +114,23 @@ const App = ({ props }) => {
 								<div className="text-md text-center mx-10">Click to set time and date of metorship meeting</div>
 							</div>
 							<div className="flex flex-col mt-5 items-center">
-								<input className="mt-2" onChange={handleDate} type="date" />
-								<input className="mt-2" onChange={handleTime} type='time' />
-								<div className="flex mt-2">
-									<div className="mx-2 text-center text-lg text-semibold">Length</div>
-									<input className="mt-2 mx-2 w-20 h-5 text-center" type="number" onChange={handleLength} />
-									<div className="mx-2 text-center text-lg text-semibold">Minutes</div>
+								<div className="flex">
+									<h2 className="mr-2">Date</h2>
+									<input className="mt-2 ml-2" onChange={handleDate} type="date" />
+								</div>
+								<div className="flex">
+									<h2 className="mr-2">Time</h2>
+									<input className="mt-2 ml-2" onChange={handleTime} type='time' />
+								</div>
+								<div className="flex">
+									<h2 className="mr-2">Time zone</h2>
+									<input className="mt-2 ml-2" onChange={handleZone} type="text" />
 								</div>
 							</div>
 						</div>
 						<form className="w-full">
 							<div className="text-lg mt-10 text-semibold">Pay for mentorship meeting here</div>
-							<CardElement className="mx-10 bg-white my-5 py-2 px-2" />
+							<CardElement className="bg-white mx-10 text-4xl" />
 							<button className="btn text-center text-lg text-semibold" onClick={handleClick}><img height={150} width={150} src={'/payWithStripe.png'} /></button>
 						</form>
 					</div>
@@ -138,7 +144,7 @@ const App = ({ props }) => {
 
 let accountId = localStorage.getItem('accountId') || "";
 
-const stripePromise = loadStripe(stripe_pub_live, {
+const stripePromise = loadStripe(stripe_pub_test, {
 	stripeAccount: accountId
 })
 

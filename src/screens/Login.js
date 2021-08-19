@@ -57,6 +57,7 @@ const Login = () => {
 		let stripeId = await createStripeUser();
 		setStripeId(stripeId);
 		let name = localStorage.getItem('personName');
+		let hourlyRate = localStorage.getItem('hourlyRate');
 		let newUser = { 
 			"email": email, 
 			"teams": [], 
@@ -65,7 +66,8 @@ const Login = () => {
 			"meetings": [],
 			"stripeId": stripeId,
 			"username": email.split("@").splice(0, 1).join(""),
-			"name": name
+			"name": name,
+			"hourlyRate": hourlyRate
 		};
 		// console.log(name);
 		axios.post('https://api-tofu.herokuapp.com/add-new-user', newUser);

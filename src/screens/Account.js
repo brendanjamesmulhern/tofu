@@ -18,9 +18,9 @@ let arr = [{
 }, {
 	name: 'My Videos',
 	address: '/myVideos'
-}, {
-	name: 'Earning Statistics',
-	address: '/stats'
+// }, {
+// 	name: 'Earning Statistics',
+// 	address: '/stats'
 }];
 
 const Account = () => {
@@ -44,9 +44,14 @@ const Account = () => {
 						</div>
 					</li>
 				)) : <div className="text-center my-10 text-xl">No Links</div> }
-				<li className="border border-gray-400 h-20 bg-gray-100 items-center justify-between">
+					<li className="border border-gray-400 h-20 bg-gray-100 items-center justify-between">
 						<div>
 							<div className="text-center"><button className="text-md my-6" onClick={handleLogOut}>Log Out</button></div>
+						</div>
+					</li>
+					<li className="border border-gray-400 h-20 bg-gray-100 items-center justify-between">
+						<div>
+							<div className="text-center"><a className="text-md my-6" href="tel:+16038285729">Contact tofu</a></div>
 						</div>
 					</li>
 			</ul>

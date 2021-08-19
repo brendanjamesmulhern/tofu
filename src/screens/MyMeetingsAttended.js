@@ -32,6 +32,9 @@ const MyMeetingsAttended = () => {
                             <div className="ml-2">
                                 <div className="text-center">{meeting.time}</div>
                             </div>
+                            <div className="ml-2">
+                                <div className="text-center">{meeting.zone}</div>
+                            </div>
                         </div>
                         <div className="flex justify-between">
                             <div className="mx-10">
