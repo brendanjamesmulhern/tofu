@@ -70,9 +70,10 @@ const App = ({ props }) => {
 		initStripe(accountId);
 	};
 	const initStripe = async (accountId) => {
+		let price = user.hourlyRate / 2;
 		let out = {
 			stripeId: accountId,
-			price: 9
+			price: price
 		};
 		axios.post('https://api-tofu.herokuapp.com/createPaymentIntent', out).then(res => {
 			doStripeStuff(res, accountId);
