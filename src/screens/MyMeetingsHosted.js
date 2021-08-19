@@ -3,6 +3,9 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { CheckIcon } from '@heroicons/react/solid';
+import { XIcon } from '@heroicons/react/solid';
+
 
 const MyMeetingsHosted = () => {
     let history = useHistory();
@@ -17,6 +20,30 @@ const MyMeetingsHosted = () => {
     }, []);
     const handleUrl = (url) => {
         window.open(url, "_blank");
+    };
+    const approveMeeting = (meetingId) => {
+        let out = {
+            meetingId: meetingId,
+            email: localStorage.getItem('email') 
+        };
+        axios.post('https://api-tofu.herokuapp.com/approveMeeting', out).then(res => {
+            console.log(res['data']);
+        });
+    };
+    const disproveMeeting = (meetingId) => {
+        let out = {
+            meetingId: meetingId,
+            email: localStorage.getItem('email')
+        };
+        axios.post('https://api-tofu.herokuapp.com/disproveMeeting', out).then(res => {
+            console.log(res['data']);
+            refund(out);
+        });
+    };
+    const refund = (out) => {
+        axios.post('https://api-tofu.herokuapp.com/refundMeeting', out).then(res => {
+            console.log(res['data']);
+        });
     };
     return (
         <div className="flex flex-col h-screen justify-between bg-gray-200">
@@ -45,6 +72,10 @@ const MyMeetingsHosted = () => {
                             </div>
                             <div className="mx-10">
                                 <button className="text-center text-blue-700" onClick={handleUrl.bind(this, meeting.url)}>Link</button>
+                            </div>
+                            <div className="mx-10">
+                                <button onClick={approveMeeting.bind(this, meeting._id)}><CheckIcon /></button>
+                                <button onClick={disproveMeeting.bind(this, meeting._id)}><XIcon /></button>
                             </div>
                         </div>
                     </li>
