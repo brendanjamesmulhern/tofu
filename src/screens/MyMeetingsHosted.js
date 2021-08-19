@@ -62,6 +62,9 @@ const MyMeetingsHosted = () => {
                             <div className="ml-2">
                                 <div className="text-center">{meeting.zone}</div>
                             </div>
+                            <div className="ml-2">
+                                <div className="text-center">{meeting.approved}</div>
+                            </div>
                         </div>
                         <div className="flex justify-between">
                             <div className="mx-10">
