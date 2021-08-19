@@ -1,0 +1,6 @@
+{
+	"appId": "com.tofu.app",
+	"appName": "tofu",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

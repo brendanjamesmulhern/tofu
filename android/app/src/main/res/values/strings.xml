@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">tofu</string>
+    <string name="title_activity_main">tofu</string>
+    <string name="package_name">com.tofu.app</string>
+    <string name="custom_url_scheme">com.tofu.app</string>
+</resources>
