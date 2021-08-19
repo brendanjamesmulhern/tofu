@@ -50,7 +50,7 @@ const MyMeetingsHosted = () => {
     return (
         <div className="flex flex-col h-screen justify-between bg-gray-200">
             <Navbar />
-            <div className="text-center -mt-52">My Hosted Meetings</div>
+            <div className="text-center -mt-28">My Hosted Meetings</div>
             <ul>
                 { meetings ? meetings.sort((a, b) => b.date - a.date ).map(meeting => (
                     <li key={meeting._id} className="flex flex-col bg-white">
